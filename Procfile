@@ -1,1 +1,1 @@
-web: python preview_server.py
+web: gunicorn app:app
