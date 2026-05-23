@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html><head>
+<meta charset="UTF-8">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Georgia', 'Times New Roman', serif;
+  font-size: 10pt;
+  color: #1a1a1a;
+  background: white;
+}
+.page {
+  width: 210mm;
+  min-height: 297mm;
+  padding: 12mm 14mm;
+}
+
+/* HEADER */
+.header {
+  text-align: center;
+  border-bottom: 3px double #1a1a1a;
+  padding-bottom: 5mm;
+  margin-bottom: 6mm;
+}
+.h-name {
+  font-size: 22pt;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 1.5mm;
+}
+.h-title {
+  font-size: 11pt;
+  color: #555;
+  font-style: italic;
+  margin-bottom: 3mm;
+}
+.h-contacts {
+  font-size: 8.5pt;
+  color: #444;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0 5mm;
+}
+.h-contacts span::before {
+  content: '';
+}
+.h-contacts span + span::before {
+  content: ' | ';
+  margin-right: 5mm;
+  color: #aaa;
+}
+
+/* SECTIONS */
+.section { margin-bottom: 5.5mm; }
+.section h2 {
+  font-size: 10pt;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  border-bottom: 1.5px solid #1a1a1a;
+  padding-bottom: 1mm;
+  margin-bottom: 3.5mm;
+  font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+}
+.summary {
+  font-size: 9.5pt;
+  line-height: 1.6;
+  color: #444;
+  font-style: italic;
+}
+
+/* EXPERIENCE */
+.job { margin-bottom: 4.5mm; }
+.job-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.job-role {
+  font-size: 10.5pt;
+  font-weight: 700;
+}
+.job-period {
+  font-size: 9pt;
+  color: #666;
+  font-style: italic;
+}
+.job-sub {
+  display: flex;
+  justify-content: space-between;
+  font-size: 9pt;
+  color: #555;
+  font-style: italic;
+  margin-bottom: 1.5mm;
+}
+.job ul { padding-left: 5mm; margin-top: 1mm; }
+.job li {
+  font-size: 9pt;
+  line-height: 1.55;
+  color: #333;
+  margin-bottom: 0.8mm;
+}
+
+/* EDUCATION */
+.edu-item { margin-bottom: 3mm; }
+.edu-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.edu-degree { font-weight: 700; font-size: 10pt; }
+.edu-period { font-size: 9pt; color: #666; font-style: italic; }
+.edu-institution { font-size: 9pt; color: #555; font-style: italic; }
+
+/* SKILLS */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2mm 8mm;
+}
+.skill-row { font-size: 9pt; line-height: 1.5; }
+.skill-cat { font-weight: 700; }
+
+/* LANGUAGES */
+.lang-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1mm 8mm;
+}
+.lang-item { font-size: 9pt; }
+.lang-item strong { font-weight: 700; }
+
+/* PROJECTS */
+.project { margin-bottom: 3.5mm; }
+.project-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.project-name { font-weight: 700; font-size: 10pt; }
+.project-link { font-size: 8.5pt; color: #666; font-style: italic; }
+.project-desc { font-size: 9pt; color: #444; line-height: 1.5; margin-top: 0.8mm; }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="header">
+    <div class="h-name">{{ personal.name }}</div>
+    <div class="h-title">{{ personal.title }}</div>
+    <div class="h-contacts">
+      {% if personal.email %}<span>{{ personal.email }}</span>{% endif %}
+      {% if personal.phone %}<span>{{ personal.phone }}</span>{% endif %}
+      {% if personal.location %}<span>{{ personal.location }}</span>{% endif %}
+      {% if personal.linkedin %}<span>{{ personal.linkedin }}</span>{% endif %}
+      {% if personal.github %}<span>{{ personal.github }}</span>{% endif %}
+    </div>
+  </div>
+
+  {% if personal.summary %}
+  <div class="section">
+    <h2>{{ labels.profile }}</h2>
+    <div class="summary">{{ personal.summary }}</div>
+  </div>
+  {% endif %}
+
+  {% if experience %}
+  <div class="section">
+    <h2>{{ labels.experience }}</h2>
+    {% for job in experience %}
+    <div class="job">
+      <div class="job-top">
+        <div class="job-role">{{ job.role }}</div>
+        <div class="job-period">{{ job.period }}</div>
+      </div>
+      <div class="job-sub">
+        <span>{{ job.company }}</span>
+        {% if job.location %}<span>{{ job.location }}</span>{% endif %}
+      </div>
+      {% if job.bullets %}
+      <ul>{% for b in job.bullets %}<li>{{ b }}</li>{% endfor %}</ul>
+      {% endif %}
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  {% if education %}
+  <div class="section">
+    <h2>{{ labels.education }}</h2>
+    {% for edu in education %}
+    <div class="edu-item">
+      <div class="edu-top">
+        <div class="edu-degree">{{ edu.degree }}</div>
+        <div class="edu-period">{{ edu.period }}</div>
+      </div>
+      <div class="edu-institution">{{ edu.institution }}</div>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  {% if skills %}
+  <div class="section">
+    <h2>{{ labels.skills }}</h2>
+    <div class="skills-grid">
+      {% for group, items in skills.items() %}
+      <div class="skill-row">
+        <span class="skill-cat">{{ group }}:</span> {{ items | join(', ') }}
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
+  {% if projects %}
+  <div class="section">
+    <h2>{{ labels.projects }}</h2>
+    {% for p in projects %}
+    <div class="project">
+      <div class="project-top">
+        <div class="project-name">{{ p.name }}</div>
+        {% if p.link %}<div class="project-link">{{ p.link }}</div>{% endif %}
+      </div>
+      <div class="project-desc">{{ p.description }}</div>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  {% if languages %}
+  <div class="section">
+    <h2>{{ labels.languages }}</h2>
+    <div class="lang-grid">
+      {% for lang in languages %}
+      <div class="lang-item"><strong>{{ lang.language }}</strong> — {{ lang.level }}</div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+</div>
+</body></html>

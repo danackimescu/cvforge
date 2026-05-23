@@ -1,0 +1,59 @@
+{
+  "personal": {
+    "name": "Dan Achimescu",
+    "title": "Software Engineer",
+    "email": "dan@example.com",
+    "phone": "+40 700 000 000",
+    "location": "Bucharest, Romania",
+    "linkedin": "linkedin.com/in/danachimescu",
+    "github": "github.com/danachimescu",
+    "summary": "Software engineer cu 5 ani de experienta in dezvoltarea de aplicatii web scalabile. Pasionat de arhitecturi curate si cod de calitate."
+  },
+  "experience": [
+    {
+      "company": "Tech SRL",
+      "role": "Senior Software Engineer",
+      "period": "2022 – prezent",
+      "location": "Bucharest",
+      "bullets": [
+        "Redesigned API-ul principal, reducand latenta cu 40%",
+        "Mentoring pentru 3 developeri junior",
+        "Implementat CI/CD pipeline cu GitHub Actions si Docker"
+      ]
+    },
+    {
+      "company": "StartupXYZ",
+      "role": "Software Developer",
+      "period": "2019 – 2022",
+      "location": "Remote",
+      "bullets": [
+        "Dezvoltat backend in Python/FastAPI pentru platforma SaaS",
+        "Integrat sisteme de plata (Stripe, PayU)",
+        "Construit dashboard analytics in React"
+      ]
+    }
+  ],
+  "education": [
+    {
+      "institution": "Universitatea Politehnica Bucharest",
+      "degree": "Licenta in Calculatoare si Tehnologia Informatiei",
+      "period": "2015 – 2019"
+    }
+  ],
+  "skills": {
+    "Backend": ["Python", "FastAPI", "Django", "PostgreSQL", "Redis"],
+    "Frontend": ["React", "TypeScript", "HTML/CSS"],
+    "DevOps": ["Docker", "Git", "Linux", "GitHub Actions"]
+  },
+  "languages": [
+    {"language": "Romana", "level": "Nativa"},
+    {"language": "Engleza", "level": "Avansat (C1)"}
+  ],
+  "projects": [
+    {
+      "name": "OpenBudget",
+      "description": "Aplicatie open-source de tracking al cheltuielilor cu import automat din extrase bancare.",
+      "link": "github.com/dan/openbudget"
+    }
+  ]
+}

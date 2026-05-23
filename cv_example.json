@@ -1,0 +1,120 @@
+{
+  "ro": {
+    "personal": {
+      "name": "Dan Achimescu",
+      "title": "Inginer Software",
+      "email": "dan@example.com",
+      "phone": "+40 700 000 000",
+      "location": "Bucuresti, Romania",
+      "linkedin": "linkedin.com/in/danachimescu",
+      "github": "github.com/danachimescu",
+      "summary": "Inginer software cu 5 ani de experienta in dezvoltarea de aplicatii web scalabile. Pasionat de arhitecturi curate si cod de calitate."
+    },
+    "experience": [
+      {
+        "company": "Tech SRL",
+        "role": "Inginer Software Senior",
+        "period": "2022 – prezent",
+        "location": "Bucuresti",
+        "bullets": [
+          "Redesenat API-ul principal, reducand latenta cu 40%",
+          "Mentorat 3 developeri juniori",
+          "Implementat pipeline CI/CD cu GitHub Actions si Docker"
+        ]
+      },
+      {
+        "company": "StartupXYZ",
+        "role": "Developer Software",
+        "period": "2019 – 2022",
+        "location": "Remote",
+        "bullets": [
+          "Dezvoltat backend in Python/FastAPI pentru platforma SaaS",
+          "Integrat sisteme de plata (Stripe, PayU)",
+          "Construit dashboard analytics in React"
+        ]
+      }
+    ],
+    "education": [
+      {
+        "institution": "Universitatea Politehnica Bucuresti",
+        "degree": "Licenta in Calculatoare si Tehnologia Informatiei",
+        "period": "2015 – 2019"
+      }
+    ],
+    "skills": {
+      "Backend": ["Python", "FastAPI", "Django", "PostgreSQL", "Redis"],
+      "Frontend": ["React", "TypeScript", "HTML/CSS"],
+      "DevOps": ["Docker", "Git", "Linux", "GitHub Actions"]
+    },
+    "languages": [
+      {"language": "Romana", "level": "Nativa"},
+      {"language": "Engleza", "level": "Avansat (C1)"}
+    ],
+    "projects": [
+      {
+        "name": "OpenBudget",
+        "description": "Aplicatie open-source de tracking al cheltuielilor cu import automat din extrase bancare.",
+        "link": "github.com/dan/openbudget"
+      }
+    ]
+  },
+  "en": {
+    "personal": {
+      "name": "Dan Achimescu",
+      "title": "Software Engineer",
+      "email": "dan@example.com",
+      "phone": "+40 700 000 000",
+      "location": "Bucharest, Romania",
+      "linkedin": "linkedin.com/in/danachimescu",
+      "github": "github.com/danachimescu",
+      "summary": "Software engineer with 5 years of experience building scalable web applications. Passionate about clean architecture and high-quality code."
+    },
+    "experience": [
+      {
+        "company": "Tech SRL",
+        "role": "Senior Software Engineer",
+        "period": "2022 – present",
+        "location": "Bucharest",
+        "bullets": [
+          "Redesigned the main API, reducing latency by 40%",
+          "Mentored 3 junior developers",
+          "Implemented CI/CD pipeline with GitHub Actions and Docker"
+        ]
+      },
+      {
+        "company": "StartupXYZ",
+        "role": "Software Developer",
+        "period": "2019 – 2022",
+        "location": "Remote",
+        "bullets": [
+          "Built Python/FastAPI backend for a SaaS platform",
+          "Integrated payment systems (Stripe, PayU)",
+          "Developed analytics dashboard in React"
+        ]
+      }
+    ],
+    "education": [
+      {
+        "institution": "Politehnica University of Bucharest",
+        "degree": "B.Sc. in Computer Science and Information Technology",
+        "period": "2015 – 2019"
+      }
+    ],
+    "skills": {
+      "Backend": ["Python", "FastAPI", "Django", "PostgreSQL", "Redis"],
+      "Frontend": ["React", "TypeScript", "HTML/CSS"],
+      "DevOps": ["Docker", "Git", "Linux", "GitHub Actions"]
+    },
+    "languages": [
+      {"language": "Romanian", "level": "Native"},
+      {"language": "English", "level": "Advanced (C1)"}
+    ],
+    "projects": [
+      {
+        "name": "OpenBudget",
+        "description": "Open-source expense tracker with automatic import from bank statements.",
+        "link": "github.com/dan/openbudget"
+      }
+    ]
+  }
+}

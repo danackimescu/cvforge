@@ -1,0 +1,7 @@
+{
+  "smtp_host": "smtp.gmail.com",
+  "smtp_port": 587,
+  "username": "adresa_ta@gmail.com",
+  "password": "parola_de_aplicatie",
+  "from_name": "Numele Tau"
+}

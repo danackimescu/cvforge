@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html><head>
+<meta charset="UTF-8">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  font-size: 9.5pt;
+  color: #222;
+  background: white;
+  line-height: 1.5;
+}
+.page {
+  width: 210mm;
+  min-height: 297mm;
+  padding: 14mm 16mm;
+}
+
+/* HEADER */
+.header { margin-bottom: 8mm; }
+.h-name {
+  font-size: 24pt;
+  font-weight: 300;
+  letter-spacing: -0.5px;
+  color: #111;
+  margin-bottom: 1mm;
+}
+.h-title {
+  font-size: 11pt;
+  color: #888;
+  font-weight: 400;
+  margin-bottom: 3.5mm;
+}
+.h-contacts {
+  font-size: 8.5pt;
+  color: #666;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 6mm;
+}
+
+/* SECTIONS */
+.section { margin-bottom: 6mm; }
+.section-title {
+  font-size: 7.5pt;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #aaa;
+  margin-bottom: 3mm;
+}
+.divider {
+  border: none;
+  border-top: 1px solid #e8e8e8;
+  margin-bottom: 4mm;
+}
+
+/* SUMMARY */
+.summary {
+  font-size: 9.5pt;
+  color: #555;
+  line-height: 1.65;
+  max-width: 160mm;
+}
+
+/* EXPERIENCE */
+.job { margin-bottom: 5mm; }
+.job-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 0.5mm;
+}
+.job-role {
+  font-size: 10pt;
+  font-weight: 600;
+  color: #111;
+}
+.job-period {
+  font-size: 8.5pt;
+  color: #aaa;
+}
+.job-meta {
+  font-size: 9pt;
+  color: #888;
+  margin-bottom: 1.5mm;
+}
+.job ul { padding-left: 0; list-style: none; }
+.job li {
+  font-size: 9pt;
+  color: #444;
+  padding-left: 3mm;
+  position: relative;
+  margin-bottom: 0.6mm;
+}
+.job li::before {
+  content: '–';
+  position: absolute;
+  left: 0;
+  color: #ccc;
+}
+
+/* EDUCATION */
+.edu-item { margin-bottom: 3mm; }
+.edu-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.edu-degree { font-size: 10pt; font-weight: 600; }
+.edu-period { font-size: 8.5pt; color: #aaa; }
+.edu-institution { font-size: 9pt; color: #888; }
+
+/* SKILLS */
+.skills-list { display: flex; flex-direction: column; gap: 1.5mm; }
+.skill-row { font-size: 9pt; color: #444; }
+.skill-cat { font-weight: 600; color: #222; margin-right: 2mm; }
+
+/* TWO-COL layout for skills + languages */
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 10mm;
+}
+
+/* LANGUAGES */
+.lang-item { font-size: 9pt; margin-bottom: 1.5mm; }
+.lang-name { font-weight: 600; }
+.lang-level { color: #888; font-size: 8.5pt; }
+
+/* PROJECTS */
+.project { margin-bottom: 3.5mm; }
+.project-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.project-name { font-size: 10pt; font-weight: 600; }
+.project-link { font-size: 8pt; color: #aaa; }
+.project-desc { font-size: 9pt; color: #555; line-height: 1.55; margin-top: 0.5mm; }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="header">
+    <div class="h-name">{{ personal.name }}</div>
+    <div class="h-title">{{ personal.title }}</div>
+    <div class="h-contacts">
+      {% if personal.email %}<span>{{ personal.email }}</span>{% endif %}
+      {% if personal.phone %}<span>{{ personal.phone }}</span>{% endif %}
+      {% if personal.location %}<span>{{ personal.location }}</span>{% endif %}
+      {% if personal.linkedin %}<span>{{ personal.linkedin }}</span>{% endif %}
+      {% if personal.github %}<span>{{ personal.github }}</span>{% endif %}
+    </div>
+  </div>
+
+  {% if personal.summary %}
+  <div class="section">
+    <div class="section-title">{{ labels.profile }}</div>
+    <hr class="divider">
+    <div class="summary">{{ personal.summary }}</div>
+  </div>
+  {% endif %}
+
+  {% if experience %}
+  <div class="section">
+    <div class="section-title">{{ labels.experience }}</div>
+    <hr class="divider">
+    {% for job in experience %}
+    <div class="job">
+      <div class="job-header">
+        <div class="job-role">{{ job.role }}</div>
+        <div class="job-period">{{ job.period }}</div>
+      </div>
+      <div class="job-meta">{{ job.company }}{% if job.location %} &middot; {{ job.location }}{% endif %}</div>
+      {% if job.bullets %}
+      <ul>{% for b in job.bullets %}<li>{{ b }}</li>{% endfor %}</ul>
+      {% endif %}
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  {% if education %}
+  <div class="section">
+    <div class="section-title">{{ labels.education }}</div>
+    <hr class="divider">
+    {% for edu in education %}
+    <div class="edu-item">
+      <div class="edu-header">
+        <div class="edu-degree">{{ edu.degree }}</div>
+        <div class="edu-period">{{ edu.period }}</div>
+      </div>
+      <div class="edu-institution">{{ edu.institution }}</div>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <div class="two-col">
+    {% if skills %}
+    <div class="section">
+      <div class="section-title">{{ labels.skills }}</div>
+      <hr class="divider">
+      <div class="skills-list">
+        {% for group, items in skills.items() %}
+        <div class="skill-row">
+          <span class="skill-cat">{{ group }}</span>{{ items | join(' · ') }}
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+
+    {% if languages %}
+    <div class="section">
+      <div class="section-title">{{ labels.languages }}</div>
+      <hr class="divider">
+      {% for lang in languages %}
+      <div class="lang-item">
+        <span class="lang-name">{{ lang.language }}</span>
+        <span class="lang-level"> — {{ lang.level }}</span>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+
+  {% if projects %}
+  <div class="section">
+    <div class="section-title">{{ labels.projects }}</div>
+    <hr class="divider">
+    {% for p in projects %}
+    <div class="project">
+      <div class="project-header">
+        <div class="project-name">{{ p.name }}</div>
+        {% if p.link %}<div class="project-link">{{ p.link }}</div>{% endif %}
+      </div>
+      <div class="project-desc">{{ p.description }}</div>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+</div>
+</body></html>

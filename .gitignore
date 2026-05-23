@@ -1,0 +1,4 @@
+email_config.json
+*.pdf
+__pycache__/
+*.pyc
