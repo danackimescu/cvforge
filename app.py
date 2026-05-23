@@ -175,6 +175,21 @@ INJECTED_UI = """
 #email-status.ok  { display:block; background:#e8f5e9; color:#2e7d32; }
 #email-status.err { display:block; background:#fdecea; color:#c62828; }
 #email-status.loading { display:block; background:#e3f2fd; color:#1565c0; }
+#cv-edit-modal-body {
+  flex:1; overflow:hidden; padding:12px 24px 16px;
+  display:flex; flex-direction:column; width:100%; box-sizing:border-box; gap:8px;
+}
+#cv-edit-textarea {
+  flex:1; width:100%; font-family:Consolas,monospace; font-size:12px;
+  border:1px solid #ddd; border-radius:4px; padding:12px;
+  resize:none; box-sizing:border-box; outline:none;
+  line-height:1.5; background:#fafafa; color:#222;
+}
+#cv-edit-textarea:focus { border-color:#8b4513; }
+#edit-status { font-size:12px; padding:5px 10px; border-radius:4px; min-height:20px; }
+#edit-status.ok  { background:#e8f5e9; color:#2e7d32; }
+#edit-status.err { background:#fdecea; color:#c62828; }
+#edit-status.loading { background:#e3f2fd; color:#1565c0; }
 </style>
 <div id="cv-print-modal" class="cv-modal">
   <div class="cv-modal-bar">
@@ -202,6 +217,20 @@ INJECTED_UI = """
     <div id="email-status"></div>
   </div>
 </div>
+<div id="cv-edit-modal" class="cv-modal">
+  <div class="cv-modal-bar" style="background:#5c3317">
+    <span>&#9998; Editeaza datele CV (JSON)</span>
+    <div class="cv-modal-actions">
+      <button class="btn-primary" onclick="saveEditData()">&#10003; Salveaza</button>
+      <button class="btn-secondary" onclick="loadEditData()">&#8635; Reincarca</button>
+      <button class="btn-secondary" onclick="closeModal('cv-edit-modal')">&#x2715; Inchide</button>
+    </div>
+  </div>
+  <div id="cv-edit-modal-body">
+    <div id="edit-status"></div>
+    <textarea id="cv-edit-textarea" spellcheck="false"></textarea>
+  </div>
+</div>
 <script>
 function currentTemplate(){return new URLSearchParams(window.location.search).get('t')||'';}
 function currentLang(){return new URLSearchParams(window.location.search).get('lang')||'ro';}
@@ -213,6 +242,10 @@ function setStatus(msg,cls){var el=document.getElementById('email-status');el.te
 function openModal(id){document.getElementById(id).classList.add('open');document.body.style.overflow='hidden';}
 function closeModal(id){document.getElementById(id).classList.remove('open');if(id==='cv-print-modal')document.getElementById('cv-print-frame').src='';if(!document.querySelector('.cv-modal.open'))document.body.style.overflow='';}
 document.addEventListener('keydown',function(e){if(e.key==='Escape')document.querySelectorAll('.cv-modal.open').forEach(m=>closeModal(m.id));});
+function openEdit(){openModal('cv-edit-modal');setEditStatus('Se incarca...','loading');fetch('/get-data').then(r=>r.json()).then(d=>{document.getElementById('cv-edit-textarea').value=JSON.stringify(d,null,2);setEditStatus('','');}).catch(e=>setEditStatus('Eroare la incarcare: '+e,'err'));}
+function loadEditData(){setEditStatus('Se incarca...','loading');fetch('/get-data').then(r=>r.json()).then(d=>{document.getElementById('cv-edit-textarea').value=JSON.stringify(d,null,2);setEditStatus('Incarcat.','ok');setTimeout(()=>setEditStatus('',''),2000);}).catch(e=>setEditStatus('Eroare: '+e,'err'));}
+function saveEditData(){var txt=document.getElementById('cv-edit-textarea').value;try{JSON.parse(txt);}catch(e){setEditStatus('JSON invalid: '+e.message,'err');return;}setEditStatus('Se salveaza...','loading');fetch('/save-data',{method:'POST',headers:{'Content-Type':'application/json'},body:txt}).then(r=>r.json()).then(d=>{if(d.ok){setEditStatus('Salvat! Se reincarca pagina...','ok');setTimeout(()=>location.reload(),1200);}else{setEditStatus('Eroare: '+d.error,'err');}}).catch(e=>setEditStatus('Eroare retea: '+e,'err'));}
+function setEditStatus(msg,cls){var el=document.getElementById('edit-status');el.textContent=msg;el.className=cls;}
 </script>
 """
 
@@ -238,6 +271,7 @@ def wrap_with_nav(cv_html: str, templates: list, active_t: str, active_lang: str
     buttons = (
         '<div style="margin-left:auto;display:flex;align-items:center;gap:8px">'
         f'<div style="display:flex;gap:3px;margin-right:4px">{lang_switcher}</div>'
+        '<button onclick="openEdit()" style="padding:6px 14px;background:#8b4513;color:white;border:none;border-radius:4px;font-size:12px;font-weight:600;cursor:pointer">&#9998; Editeaza CV</button>'
         '<button onclick="openPreview()" style="padding:6px 14px;background:#1b3a5c;color:white;border:none;border-radius:4px;font-size:12px;font-weight:600;cursor:pointer">&#128438; Previzualizeaza / Print</button>'
         '<button onclick="openEmail()" style="padding:6px 14px;background:#2e7d32;color:white;border:none;border-radius:4px;font-size:12px;font-weight:600;cursor:pointer">&#9993; Trimite email</button>'
         '</div>'
@@ -296,6 +330,23 @@ def send_email_route():
             template=payload.get("template") or templates[0],
             lang=payload.get("lang", LANGS[0]),
         )
+        return jsonify({"ok": True})
+    except Exception as exc:
+        return jsonify({"ok": False, "error": str(exc)})
+
+
+@app.route("/get-data")
+def get_data():
+    with open(DATA_FILE, encoding="utf-8") as f:
+        return jsonify(json.load(f))
+
+
+@app.route("/save-data", methods=["POST"])
+def save_data():
+    try:
+        data = request.get_json(force=True)
+        with open(DATA_FILE, "w", encoding="utf-8") as f:
+            json.dump(data, f, ensure_ascii=False, indent=2)
         return jsonify({"ok": True})
     except Exception as exc:
         return jsonify({"ok": False, "error": str(exc)})
