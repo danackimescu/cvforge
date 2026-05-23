@@ -3,5 +3,5 @@ services:
     name: cvforge
     env: python
     buildCommand: pip install -r requirements.txt
-    startCommand: python preview_server.py
+    startCommand: gunicorn your_application.wsgi
     plan: free
